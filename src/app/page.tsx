@@ -1,69 +1,277 @@
-import Image from "next/image";
 
-export default function Home() {
+import Link from "next/link";
+import Image from "next/image";
+import {
+  ArrowRight,
+  Camera,
+  Mic,
+  Music,
+  Clapperboard,
+  Palette,
+  Search,
+  CalendarCheck,
+  CheckCircle,
+} from "lucide-react";
+
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+    <main>
+      {/* Hero Section */}
+      <section className="bg-base-100 px-6 py-20 md:py-28">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2">
+          <div>
+            <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-primary">
+              Welcome to StudioSpace
+            </p>
+
+            <h1 className="text-4xl font-bold leading-tight md:text-6xl">
+              Find the Right Space for Your Next Creative Project.
+            </h1>
+
+            <p className="mt-6 max-w-xl text-base leading-8 text-base-content/70">
+              Explore photography studios, podcast rooms, music
+              spaces, and creative workshops. Discover a place
+              that fits your ideas and brings your projects to life.
+            </p>
+
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Link
+                href="/studios"
+                className="btn btn-primary rounded-full px-8"
+              >
+                Explore Studios
+                <ArrowRight size={18} />
+              </Link>
+
+              <Link
+                href="/how-it-works"
+                className="btn btn-outline rounded-full px-8"
+              >
+                How It Works
+              </Link>
+            </div>
+          </div>
+
+          <div className="relative h-80 overflow-hidden rounded-2xl md:h-[440px]">
             <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
+              src="https://images.unsplash.com/photo-1497366754035-f200968a6e72"
+              alt="Creative studio workspace"
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* Studio Categories */}
+      <section className="bg-base-200 px-6 py-20">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-10">
+            <p className="text-sm font-semibold uppercase tracking-widest text-primary">
+              Explore Categories
+            </p>
+
+            <h2 className="mt-3 text-3xl font-bold md:text-4xl">
+              Find a Space That Fits Your Work
+            </h2>
+
+            <p className="mt-4 max-w-2xl text-base-content/70">
+              Every creative project needs the right environment.
+              Explore different types of studios available on
+              StudioSpace.
+            </p>
+          </div>
+
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <Link
+              href="/studios"
+              className="rounded-2xl border border-base-300 bg-base-100 p-6 transition hover:border-primary"
+            >
+              <Camera size={30} className="text-primary" />
+              <h3 className="mt-5 text-xl font-semibold">
+                Photography Studios
+              </h3>
+              <p className="mt-2 text-sm leading-6 text-base-content/70">
+                Spaces for portraits, product photography,
+                and professional photoshoots.
+              </p>
+            </Link>
+
+            <Link
+              href="/studios"
+              className="rounded-2xl border border-base-300 bg-base-100 p-6 transition hover:border-primary"
+            >
+              <Clapperboard size={30} className="text-primary" />
+              <h3 className="mt-5 text-xl font-semibold">
+                Sound Stages
+              </h3>
+              <p className="mt-2 text-sm leading-6 text-base-content/70">
+                Creative spaces for filming, video production,
+                and commercial projects.
+              </p>
+            </Link>
+
+            <Link
+              href="/studios"
+              className="rounded-2xl border border-base-300 bg-base-100 p-6 transition hover:border-primary"
+            >
+              <Mic size={30} className="text-primary" />
+              <h3 className="mt-5 text-xl font-semibold">
+                Podcast Rooms
+              </h3>
+              <p className="mt-2 text-sm leading-6 text-base-content/70">
+                Comfortable recording rooms for podcasts,
+                interviews, and conversations.
+              </p>
+            </Link>
+
+            <Link
+              href="/studios"
+              className="rounded-2xl border border-base-300 bg-base-100 p-6 transition hover:border-primary"
+            >
+              <Music size={30} className="text-primary" />
+              <h3 className="mt-5 text-xl font-semibold">
+                Music Studios
+              </h3>
+              <p className="mt-2 text-sm leading-6 text-base-content/70">
+                Recording and rehearsal spaces for musicians
+                and music producers.
+              </p>
+            </Link>
+
+            <Link
+              href="/studios"
+              className="rounded-2xl border border-base-300 bg-base-100 p-6 transition hover:border-primary"
+            >
+              <Palette size={30} className="text-primary" />
+              <h3 className="mt-5 text-xl font-semibold">
+                Art Workshops
+              </h3>
+              <p className="mt-2 text-sm leading-6 text-base-content/70">
+                Open creative spaces for art, workshops,
+                and hands-on projects.
+              </p>
+            </Link>
+          </div>
+
+          <div className="mt-10 text-center">
+            <Link
+              href="/studios"
+              className="btn btn-primary rounded-full px-8"
+            >
+              Explore All Studios
+              <ArrowRight size={18} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section className="bg-base-100 px-6 py-20">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-12 text-center">
+            <p className="text-sm font-semibold uppercase tracking-widest text-primary">
+              Simple and Easy
+            </p>
+
+            <h2 className="mt-3 text-3xl font-bold md:text-4xl">
+              How StudioSpace Works
+            </h2>
+
+            <p className="mx-auto mt-4 max-w-2xl text-base-content/70">
+              Finding a creative space should be simple.
+              Here is how StudioSpace is designed to work.
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-3">
+            <div className="rounded-2xl border border-base-300 bg-base-200 p-7 text-center">
+              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
+                <Search size={26} className="text-primary" />
+              </div>
+
+              <h3 className="mt-5 text-xl font-semibold">
+                1. Explore Studios
+              </h3>
+
+              <p className="mt-3 text-sm leading-7 text-base-content/70">
+                Browse studio categories and discover spaces
+                that match your creative needs.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-base-300 bg-base-200 p-7 text-center">
+              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
+                <CalendarCheck size={26} className="text-primary" />
+              </div>
+
+              <h3 className="mt-5 text-xl font-semibold">
+                2. Choose Your Time
+              </h3>
+
+              <p className="mt-3 text-sm leading-7 text-base-content/70">
+                Select a studio and choose the date and time
+                you want to reserve.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-base-300 bg-base-200 p-7 text-center">
+              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
+                <CheckCircle size={26} className="text-primary" />
+              </div>
+
+              <h3 className="mt-5 text-xl font-semibold">
+                3. Start Creating
+              </h3>
+
+              <p className="mt-3 text-sm leading-7 text-base-content/70">
+                Once booking is available, you will be able
+                to reserve your space and get started.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-10 text-center">
+            <Link
+              href="/how-it-works"
+              className="btn btn-outline rounded-full px-8"
+            >
+              Learn How It Works
+              <ArrowRight size={18} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Studio Owner Section */}
+      <section className="bg-base-200 px-6 py-20">
+        <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-8 rounded-2xl border border-base-300 bg-base-100 p-8 md:flex-row md:items-center md:p-12">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-widest text-primary">
+              For Studio Owners
+            </p>
+
+            <h2 className="mt-4 max-w-2xl text-3xl font-bold md:text-4xl">
+              Have a Studio? Share Your Space with Creators.
+            </h2>
+
+            <p className="mt-4 max-w-2xl leading-7 text-base-content/70">
+              StudioSpace is being built to help studio owners
+              connect with people looking for creative workspaces.
+            </p>
+          </div>
+
+          <Link
+            href="/add-studio"
+            className="btn btn-primary shrink-0 rounded-full px-8"
+          >
+            List Your Studio
+            <ArrowRight size={18} />
+          </Link>
+        </div>
+      </section>
+    </main>
   );
 }
