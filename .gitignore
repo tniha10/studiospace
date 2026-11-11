@@ -32,6 +32,10 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
+
+# backend (separate project and git repository)
+/server/
 
 # vercel
 .vercel

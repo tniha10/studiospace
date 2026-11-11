@@ -11,14 +11,12 @@ import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { UserMenu } from "@/components/layout/user-menu";
 
 import { NAV_LINKS } from "@/lib/constants";
-import type { SessionUser } from "@/lib/types";
+import { useSession } from "@/lib/auth-client";
 
-type SiteHeaderProps = {
-  user?: SessionUser | null;
-};
-
-export function SiteHeader({ user = null }: SiteHeaderProps) {
+export function SiteHeader() {
   const pathname = usePathname();
+  const { data: session, isPending } = useSession();
+  const user = session?.user ?? null;
 
   // State for mobile navbar
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -84,7 +82,9 @@ export function SiteHeader({ user = null }: SiteHeaderProps) {
 
           {/* Desktop Login / User Menu */}
           <div className="hidden items-center gap-2 lg:flex">
-            {user ? (
+            {isPending ? (
+              <span className="skeleton h-9 w-28 rounded-full" />
+            ) : user ? (
               <UserMenu user={user} />
             ) : (
               <>
