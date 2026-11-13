@@ -23,6 +23,14 @@ export function LoginForm({ nextPath }: LoginFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
+  // Password reset is intentionally not implemented (per assignment brief),
+  // so this shows friendly feedback with a toast instead of an alert.
+  function handleForgotPassword() {
+    toast.info(
+      "Password reset isn't available yet. Please contact support or create a new account."
+    );
+  }
+
   async function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
@@ -129,10 +137,15 @@ export function LoginForm({ nextPath }: LoginFormProps) {
             </button>
           </div>
 
+          {/* Forgot Password */}
           <div className="mt-2 text-right">
-            <span className="text-sm text-base-content/50">
+            <button
+              type="button"
+              onClick={handleForgotPassword}
+              className="cursor-pointer text-sm font-medium text-primary hover:underline"
+            >
               Forgot Password?
-            </span>
+            </button>
           </div>
         </div>
 
