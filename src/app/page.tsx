@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import { Suspense } from "react";
 import {
@@ -24,45 +23,8 @@ import {
 export default function HomePage() {
   return (
     <main>
-      {/* Hero Section */}
-      <section className="bg-base-100 px-6 py-20 md:py-28">
-        <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2">
-          <div>
-            <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-primary">
-              Welcome to StudioSpace
-            </p>
-
-            <h1 className="text-4xl font-bold leading-tight md:text-6xl">
-              Find the Right Space for Your Next Creative Project.
-            </h1>
-
-            <p className="mt-6 max-w-xl text-base leading-8 text-base-content/70">
-              Explore photography studios, podcast rooms, music
-              spaces, and creative workshops. Discover a place
-              that fits your ideas and brings your projects to life.
-            </p>
-
-            <div className="mt-8 flex flex-wrap gap-4">
-              <Link
-                href="/studios"
-                className="btn btn-primary rounded-full px-8"
-              >
-                Explore Studios
-                <ArrowRight size={18} />
-              </Link>
-
-              <Link
-                href="/how-it-works"
-                className="btn btn-outline rounded-full px-8"
-              >
-                How It Works
-              </Link>
-            </div>
-          </div>
-
-          <HeroSlider />
-        </div>
-      </section>
+      {/* Hero Slider */}
+      <HeroSlider />
 
       {/* Studio Categories */}
       <section className="bg-base-200 px-6 py-20">

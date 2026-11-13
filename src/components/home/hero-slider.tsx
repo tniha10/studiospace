@@ -1,139 +1,131 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
+import type { CSSProperties } from "react";
+import { ArrowRight } from "lucide-react";
+import { A11y, Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+import "swiper/css";
+import "swiper/css/effect-fade";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 const SLIDES = [
   {
     src: "https://images.unsplash.com/photo-1497366754035-f200968a6e72",
     alt: "Bright creative studio workspace with large windows",
     label: "Photo Studios",
-    caption: "Natural light, backdrops, and room to build your set.",
+    headline: "Find the Right Space for Your Next Shoot.",
+    subtext:
+      "Natural light, seamless backdrops, and room to build your set. Book a photography studio by the hour.",
   },
   {
     src: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04",
     alt: "Music studio with a mixing desk and monitors",
     label: "Music Suites",
-    caption: "Record, rehearse, and mix in a treated room.",
+    headline: "Record, Rehearse, and Mix in a Treated Room.",
+    subtext:
+      "Professional music suites with the gear you need, ready when your next session is.",
   },
   {
     src: "https://images.unsplash.com/photo-1478737270239-2f02b77fc618",
     alt: "Podcast microphone in a quiet recording room",
     label: "Podcast Rooms",
-    caption: "Quiet spaces built for interviews and clear audio.",
+    headline: "Quiet Rooms Built for Clear Audio.",
+    subtext:
+      "Comfortable podcast lounges for interviews and conversations, booked in a few clicks.",
   },
 ] as const;
 
-const SLIDE_INTERVAL_MS = 6000;
+// Swiper reads these CSS variables for its arrows and dots.
+const SWIPER_THEME = {
+  "--swiper-navigation-color": "#ffffff",
+  "--swiper-pagination-color": "#ffffff",
+  "--swiper-pagination-bullet-inactive-color": "#ffffff",
+  "--swiper-pagination-bullet-inactive-opacity": "0.5",
+} as CSSProperties;
 
 export function HeroSlider() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-
-  useEffect(() => {
-    if (isPaused) {
-      return;
-    }
-
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-
-    if (prefersReducedMotion) {
-      return;
-    }
-
-    const timer = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % SLIDES.length);
-    }, SLIDE_INTERVAL_MS);
-
-    return () => window.clearInterval(timer);
-  }, [isPaused]);
-
-  function showPrevious() {
-    setActiveIndex((current) => (current - 1 + SLIDES.length) % SLIDES.length);
-  }
-
-  function showNext() {
-    setActiveIndex((current) => (current + 1) % SLIDES.length);
-  }
-
-  const slide = SLIDES[activeIndex];
-
   return (
-    <div
-      className="relative h-80 overflow-hidden rounded-2xl bg-base-300 md:h-[440px]"
-      role="region"
+    <section
+      className="relative bg-base-300"
       aria-roledescription="carousel"
       aria-label="Featured studio spaces"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-      onFocus={() => setIsPaused(true)}
-      onBlur={() => setIsPaused(false)}
     >
-      {SLIDES.map((item, index) => (
-        <div
-          key={item.src}
-          className={`absolute inset-0 transition-opacity duration-500 ${
-            index === activeIndex ? "opacity-100" : "opacity-0"
-          }`}
-          aria-hidden={index !== activeIndex}
-        >
-          <Image
-            src={item.src}
-            alt={item.alt}
-            fill
-            priority={index === 0}
-            sizes="(max-width: 1024px) 100vw, 50vw"
-            className="object-cover"
-          />
-        </div>
-      ))}
+      <h1 className="sr-only">
+        StudioSpace: book creative studios for photo, film, podcast, music and
+        art
+      </h1>
 
-      {/* Readability overlay + caption */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/75 to-transparent p-5 pt-16 text-white">
-        <p className="text-xs font-semibold uppercase tracking-widest text-white/75">
-          {slide.label}
-        </p>
-
-        <p className="mt-1 text-sm font-medium">{slide.caption}</p>
-      </div>
-
-      {/* Previous / Next */}
-      <button
-        type="button"
-        onClick={showPrevious}
-        aria-label="Previous slide"
-        className="btn btn-circle btn-sm absolute left-3 top-1/2 z-20 -translate-y-1/2 border-none bg-white/85 text-black hover:bg-white"
+      <Swiper
+        modules={[A11y, Autoplay, EffectFade, Navigation, Pagination]}
+        effect="fade"
+        fadeEffect={{ crossFade: true }}
+        loop
+        speed={700}
+        autoplay={{
+          delay: 5500,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
+        navigation
+        pagination={{ clickable: true }}
+        style={SWIPER_THEME}
+        className="h-[560px] md:h-[640px]"
       >
-        <ChevronLeft size={18} />
-      </button>
+        {SLIDES.map((slide, index) => (
+          <SwiperSlide key={slide.src}>
+            <div className="relative h-full w-full">
+              <Image
+                src={slide.src}
+                alt={slide.alt}
+                fill
+                priority={index === 0}
+                sizes="100vw"
+                className="object-cover"
+              />
 
-      <button
-        type="button"
-        onClick={showNext}
-        aria-label="Next slide"
-        className="btn btn-circle btn-sm absolute right-3 top-1/2 z-20 -translate-y-1/2 border-none bg-white/85 text-black hover:bg-white"
-      >
-        <ChevronRight size={18} />
-      </button>
+              {/* Readability overlay */}
+              <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-black/10" />
 
-      {/* Dots */}
-      <div className="absolute bottom-3 right-4 z-20 flex gap-1.5">
-        {SLIDES.map((item, index) => (
-          <button
-            key={item.src}
-            type="button"
-            onClick={() => setActiveIndex(index)}
-            aria-label={`Show slide ${index + 1}: ${item.label}`}
-            aria-current={index === activeIndex}
-            className={`h-2 rounded-full transition-all ${
-              index === activeIndex ? "w-5 bg-white" : "w-2 bg-white/50"
-            }`}
-          />
+              <div className="relative z-10 mx-auto flex h-full max-w-6xl items-center px-6 pb-10">
+                <div className="max-w-2xl text-white">
+                  <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-white/80">
+                    {slide.label}
+                  </p>
+
+                  <h2 className="text-4xl font-bold leading-tight md:text-6xl">
+                    {slide.headline}
+                  </h2>
+
+                  <p className="mt-6 max-w-xl text-base leading-8 text-white/85">
+                    {slide.subtext}
+                  </p>
+
+                  <div className="mt-8 flex flex-wrap gap-4">
+                    <Link
+                      href="/studios"
+                      className="btn btn-primary rounded-full px-8"
+                    >
+                      Explore Studios
+                      <ArrowRight size={18} />
+                    </Link>
+
+                    <Link
+                      href="/add-studio"
+                      className="btn rounded-full border-white bg-transparent px-8 text-white hover:border-white hover:bg-white hover:text-black"
+                    >
+                      Host Your Space
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </SwiperSlide>
         ))}
-      </div>
-    </div>
+      </Swiper>
+    </section>
   );
 }
