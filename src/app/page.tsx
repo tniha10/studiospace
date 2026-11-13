@@ -23,8 +23,7 @@ import {
 export default function HomePage() {
   return (
     <main>
-      {/* Hero Slider */}
-      <HeroSlider />
+      <Suspense fallback={<div className="h-[500px] animate-pulse bg-muted" />}><HeroSlider /></Suspense>
 
       {/* Studio Categories */}
       <section className="bg-base-200 px-6 py-20">
