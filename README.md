@@ -257,3 +257,12 @@ Not verified in this workspace, because the required credentials are absent:
   `https://<frontend-domain>/api/auth/callback/google`.
 - MongoDB Atlas, Google OAuth, and ImgBB credentials belong in environment
   variables only. Never commit `.env` files.
+
+## Test Credentials
+
+- Email: examiner@studiospace.com
+- Password: Studio123
+
+Google login note: If Google sign-in shows an "unverified app"
+warning, click Advanced → Go to StudioSpace to continue.
+Email/password login is the recommended way to test.
