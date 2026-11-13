@@ -260,7 +260,7 @@ Not verified in this workspace, because the required credentials are absent:
 
 ## Test Credentials
 
-- Email: examiner@studiospace.com
+- Email: test1@studiospace.com
 - Password: Studio123
 
 Google login note: If Google sign-in shows an "unverified app"
