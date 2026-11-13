@@ -6,7 +6,7 @@ import { useState, type FormEvent } from "react";
 import { Eye, EyeOff, ImageIcon, Lock, Mail, User } from "lucide-react";
 import { toast } from "sonner";
 
-import { signIn, signUp } from "@/lib/auth-client";
+import { signIn, signOut, signUp } from "@/lib/auth-client";
 
 type RegisterFormProps = {
   nextPath: string;
@@ -60,8 +60,18 @@ export function RegisterForm({ nextPath }: RegisterFormProps) {
         return;
       }
 
-      toast.success("Account created. Welcome to StudioSpace!");
-      router.push(nextPath);
+      // BetterAuth signs the new user in automatically. The brief asks for the
+      // user to land on the Login page after registering, so end that session
+      // first and let them log in themselves.
+      try {
+        await signOut();
+      } catch {
+        // If sign-out fails the user is simply still signed in; the login
+        // page redirect below still works, so this is safe to ignore.
+      }
+
+      toast.success("Account created. Please log in to continue.");
+      router.push(`/login?next=${encodeURIComponent(nextPath)}`);
       router.refresh();
     } catch (caught) {
       setError(
