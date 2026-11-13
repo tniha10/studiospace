@@ -21,6 +21,8 @@ export type Studio = {
   capacity: number;
   location: string;
   imageUrl: string;
+  /** Optional extra photos. Shown after imageUrl in the gallery. */
+  gallery?: string[];
   amenities: string[];
   description: string;
   hostId: string;

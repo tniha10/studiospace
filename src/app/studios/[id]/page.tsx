@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -12,6 +11,7 @@ import {
 } from "lucide-react";
 
 import { BookingForm } from "@/components/studios/booking-form";
+import { StudioGallery } from "@/components/studios/studio-gallery";
 import { getCategoryBySlug } from "@/lib/constants";
 import { getStudio, ServerApiError } from "@/lib/server-api";
 import type { Studio } from "@/lib/types";
@@ -119,18 +119,11 @@ export default async function StudioDetailsPage({
               {/* Left Column */}
               <div className="space-y-8">
 
-                {/* Studio Image */}
-                <div className="relative h-72 overflow-hidden rounded-2xl bg-base-300 md:h-[420px]">
-                  <Image
-                    src={studio.imageUrl}
-                    alt={studio.title}
-                    fill
-                    unoptimized
-                    priority
-                    sizes="(max-width: 1024px) 100vw, 65vw"
-                    className="object-cover"
-                  />
-                </div>
+                {/* Photo Gallery */}
+                <StudioGallery
+                  images={[studio.imageUrl, ...(studio.gallery ?? [])]}
+                  title={studio.title}
+                />
 
                 {/* Overview */}
                 <section className="rounded-2xl border border-base-300 bg-base-100 p-7">
