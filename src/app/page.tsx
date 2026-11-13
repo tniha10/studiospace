@@ -1,6 +1,6 @@
 
 import Link from "next/link";
-import Image from "next/image";
+import { Suspense } from "react";
 import {
   ArrowRight,
   Camera,
@@ -9,9 +9,17 @@ import {
   Clapperboard,
   Palette,
   Search,
+  SlidersHorizontal,
   CalendarCheck,
   CheckCircle,
+  ShieldCheck,
 } from "lucide-react";
+
+import { HeroSlider } from "@/components/home/hero-slider";
+import {
+  FeaturedStudios,
+  FeaturedStudiosSkeleton,
+} from "@/components/home/featured-studios";
 
 export default function HomePage() {
   return (
@@ -52,16 +60,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="relative h-80 overflow-hidden rounded-2xl md:h-[440px]">
-            <Image
-              src="https://images.unsplash.com/photo-1497366754035-f200968a6e72"
-              alt="Creative studio workspace"
-              fill
-              priority
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover"
-            />
-          </div>
+          <HeroSlider />
         </div>
       </section>
 
@@ -86,7 +85,7 @@ export default function HomePage() {
 
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             <Link
-              href="/studios"
+              href="/studios?category=photo-studio"
               className="rounded-2xl border border-base-300 bg-base-100 p-6 transition hover:border-primary"
             >
               <Camera size={30} className="text-primary" />
@@ -100,7 +99,7 @@ export default function HomePage() {
             </Link>
 
             <Link
-              href="/studios"
+              href="/studios?category=sound-stage"
               className="rounded-2xl border border-base-300 bg-base-100 p-6 transition hover:border-primary"
             >
               <Clapperboard size={30} className="text-primary" />
@@ -114,7 +113,7 @@ export default function HomePage() {
             </Link>
 
             <Link
-              href="/studios"
+              href="/studios?category=podcast-room"
               className="rounded-2xl border border-base-300 bg-base-100 p-6 transition hover:border-primary"
             >
               <Mic size={30} className="text-primary" />
@@ -128,7 +127,7 @@ export default function HomePage() {
             </Link>
 
             <Link
-              href="/studios"
+              href="/studios?category=music-suite"
               className="rounded-2xl border border-base-300 bg-base-100 p-6 transition hover:border-primary"
             >
               <Music size={30} className="text-primary" />
@@ -142,7 +141,7 @@ export default function HomePage() {
             </Link>
 
             <Link
-              href="/studios"
+              href="/studios?category=art-workshop"
               className="rounded-2xl border border-base-300 bg-base-100 p-6 transition hover:border-primary"
             >
               <Palette size={30} className="text-primary" />
@@ -168,6 +167,11 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Featured Studios from the database */}
+      <Suspense fallback={<FeaturedStudiosSkeleton />}>
+        <FeaturedStudios />
+      </Suspense>
+
       {/* How It Works */}
       <section className="bg-base-100 px-6 py-20">
         <div className="mx-auto max-w-6xl">
@@ -186,7 +190,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <div className="rounded-2xl border border-base-300 bg-base-200 p-7 text-center">
               <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
                 <Search size={26} className="text-primary" />
@@ -204,16 +208,31 @@ export default function HomePage() {
 
             <div className="rounded-2xl border border-base-300 bg-base-200 p-7 text-center">
               <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
+                <SlidersHorizontal size={26} className="text-primary" />
+              </div>
+
+              <h3 className="mt-5 text-xl font-semibold">
+                2. Compare Details
+              </h3>
+
+              <p className="mt-3 text-sm leading-7 text-base-content/70">
+                Check the location, capacity, amenities, and
+                hourly price before you choose.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-base-300 bg-base-200 p-7 text-center">
+              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
                 <CalendarCheck size={26} className="text-primary" />
               </div>
 
               <h3 className="mt-5 text-xl font-semibold">
-                2. Choose Your Time
+                3. Request Your Time
               </h3>
 
               <p className="mt-3 text-sm leading-7 text-base-content/70">
-                Select a studio and choose the date and time
-                you want to reserve.
+                Pick a date and time. The server checks for
+                overlapping bookings and sets the price.
               </p>
             </div>
 
@@ -223,12 +242,12 @@ export default function HomePage() {
               </div>
 
               <h3 className="mt-5 text-xl font-semibold">
-                3. Start Creating
+                4. Start Creating
               </h3>
 
               <p className="mt-3 text-sm leading-7 text-base-content/70">
-                Once booking is available, you will be able
-                to reserve your space and get started.
+                Track your Pending request in My Bookings, then
+                show up and make something great.
               </p>
             </div>
           </div>
@@ -241,6 +260,57 @@ export default function HomePage() {
               Learn How It Works
               <ArrowRight size={18} />
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Host Guarantee */}
+      <section className="bg-base-100 px-6 py-20">
+        <div className="mx-auto max-w-6xl rounded-2xl border border-primary/25 bg-primary/5 p-8 md:p-12">
+          <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
+            <div className="max-w-xl">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
+                <ShieldCheck size={28} className="text-primary" />
+              </div>
+
+              <h2 className="mt-5 text-3xl font-bold md:text-4xl">
+                The StudioSpace Host Guarantee
+              </h2>
+
+              <p className="mt-4 leading-7 text-base-content/70">
+                Every listing and booking follows the same rules,
+                whether you are hosting your first space or booking
+                your tenth project.
+              </p>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-3 md:max-w-xl">
+              <div>
+                <CheckCircle size={20} className="text-primary" />
+                <h3 className="mt-2 font-semibold">Verified listings</h3>
+                <p className="mt-1 text-xs leading-5 text-base-content/65">
+                  Listings are tied to the host account that created them.
+                </p>
+              </div>
+
+              <div>
+                <CheckCircle size={20} className="text-primary" />
+                <h3 className="mt-2 font-semibold">Locked-in pricing</h3>
+                <p className="mt-1 text-xs leading-5 text-base-content/65">
+                  Totals are recalculated on the server, not trusted
+                  from the browser.
+                </p>
+              </div>
+
+              <div>
+                <CheckCircle size={20} className="text-primary" />
+                <h3 className="mt-2 font-semibold">No double bookings</h3>
+                <p className="mt-1 text-xs leading-5 text-base-content/65">
+                  Overlapping Pending and Confirmed requests are
+                  rejected automatically.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -258,8 +328,9 @@ export default function HomePage() {
             </h2>
 
             <p className="mt-4 max-w-2xl leading-7 text-base-content/70">
-              StudioSpace is being built to help studio owners
-              connect with people looking for creative workspaces.
+              StudioSpace helps studio owners connect with people
+              looking for creative workspaces. Add your listing once
+              and manage it from your dashboard.
             </p>
           </div>
 
